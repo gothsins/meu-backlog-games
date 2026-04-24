@@ -28,6 +28,10 @@ public class Game {
     private Integer nota;
     private String status;     // Ex: "Backlog", "Jogando", "Zerado"
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id") // Isso cria uma "chave estrangeira" no banco
+    private Categoria categoria;
+
     @PastOrPresent(message = "A data de lançamento não pode ser no futuro")
     private LocalDate dataLancamento;
 }
