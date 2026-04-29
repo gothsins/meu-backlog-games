@@ -14,15 +14,15 @@ import java.util.List;
 public class CategoriaController {
 
     @Autowired
-    private CategoriaRepository repository;
+    private CategoriaService service;
 
     @PostMapping
     public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrar(categoria));
     }
 
     @GetMapping
     public List<Categoria> listar() {
-        return repository.findAll();
+        return service.listarTodos();
     }
 }

@@ -26,10 +26,10 @@ public class Game {
     @Min(value = 0, message = "A nota mínima é 0")
     @Max(value = 10, message = "A nota máxima é 10")
     private Integer nota;
-    private String status;     // Ex: "Backlog", "Jogando", "Zerado"
+    private String status;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id") // Isso cria uma "chave estrangeira" no banco
+    @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
     @PastOrPresent(message = "A data de lançamento não pode ser no futuro")
