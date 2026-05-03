@@ -1,5 +1,7 @@
 package com.guiverme.meu_backlog_games;
 
+import com.guiverme.meu_backlog_games.dto.GameRequestDTO;
+import com.guiverme.meu_backlog_games.dto.GameResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +24,9 @@ public class GameController {
     }
 
     @PostMapping
-    public ResponseEntity<Game> cadastrar(@Valid @RequestBody Game novoJogo) {
-        Game jogoSalvo = service.cadastrar(novoJogo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(jogoSalvo);
+    public ResponseEntity<GameResponseDTO> cadastrar(@Valid @RequestBody GameRequestDTO novoJogoDTO) {
+        GameResponseDTO jogoSalvoDTO = service.cadastrar(novoJogoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(jogoSalvoDTO);
     }
 
     @PutMapping("/{id}")
