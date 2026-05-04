@@ -1,5 +1,7 @@
 package com.guiverme.meu_backlog_games;
 
+import com.guiverme.meu_backlog_games.dto.CategoriaRequestDTO;
+import com.guiverme.meu_backlog_games.dto.CategoriaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +40,18 @@ public class CategoriaService {
             return true;
         }
         return false;
+    }
+
+    private Categoria converterParaEntidade(CategoriaRequestDTO dto) {
+        Categoria categoria = new Categoria();
+        categoria.setNome(dto.getNome());
+        return categoria;
+    }
+
+    private CategoriaResponseDTO converterParaResponseDTO(Categoria categoria) {
+        CategoriaResponseDTO dto = new CategoriaResponseDTO();
+        dto.setId(categoria.getId());
+        dto.setNome(categoria.getNome());
+        return dto;
     }
 }
