@@ -1,5 +1,6 @@
-package com.guiverme.meu_backlog_games;
+package com.guiverme.meu_backlog_games.repository;
 
+import com.guiverme.meu_backlog_games.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

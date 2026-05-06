@@ -1,13 +1,19 @@
-package com.guiverme.meu_backlog_games;
+package com.guiverme.meu_backlog_games.service;
 
 
+import com.guiverme.meu_backlog_games.entity.Categoria;
+import com.guiverme.meu_backlog_games.entity.Game;
 import com.guiverme.meu_backlog_games.dto.GameRequestDTO;
 import com.guiverme.meu_backlog_games.dto.GameResponseDTO;
+import com.guiverme.meu_backlog_games.repository.CategoriaRepository;
+import com.guiverme.meu_backlog_games.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -99,6 +105,16 @@ public class GameService {
         return jogosEncontrados.stream()
                 .map(game -> converterParaResponseDTO(game))
                 .toList();
+    }
+
+    public Map<String, List<GameResponseDTO>> listarJogosAgrupadosPorCategoria() {
+        List<Game> todosOsJogos = repository.findAll();
+
+        return todosOsJogos.stream()
+                .map(this::converterParaResponseDTO)
+                .collect(Collectors.groupingBy(
+                        dto -> dto.getNomeCategoria() != null ? dto.getNomeCategoria() : "Sem Categoria"
+                ));
     }
 
     private Game converterParaEntidade(GameRequestDTO dto, Categoria categoria) {

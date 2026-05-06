@@ -1,4 +1,4 @@
-package com.guiverme.meu_backlog_games;
+package com.guiverme.meu_backlog_games.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

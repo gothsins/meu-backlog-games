@@ -1,4 +1,4 @@
-package com.guiverme.meu_backlog_games;
+package com.guiverme.meu_backlog_games.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
