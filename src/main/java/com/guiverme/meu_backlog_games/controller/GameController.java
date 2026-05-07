@@ -2,6 +2,7 @@ package com.guiverme.meu_backlog_games.controller;
 
 import com.guiverme.meu_backlog_games.dto.GameRequestDTO;
 import com.guiverme.meu_backlog_games.dto.GameResponseDTO;
+import com.guiverme.meu_backlog_games.exception.ResourceNotFoundException;
 import com.guiverme.meu_backlog_games.service.GameService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,24 +33,27 @@ public class GameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<GameResponseDTO> buscarPorId(@PathVariable Long id) {
-        return service.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        GameResponseDTO jogo = service.buscarPorId(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Jogo não encontrado com o ID: " + id));
+
+        return ResponseEntity.ok(jogo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<GameResponseDTO> atualizar(@PathVariable Long id, @Valid @RequestBody GameRequestDTO dto) {
-        return service.atualizar(id, dto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        GameResponseDTO jogoAtualizado = service.atualizar(id, dto)
+                .orElseThrow(() -> new ResourceNotFoundException("Jogo não encontrado para atualização. ID: " + id));
+
+        return ResponseEntity.ok(jogoAtualizado);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        if (service.deletar(id)) {
-            return ResponseEntity.noContent().build();
+        if (!service.deletar(id)) {
+            throw new ResourceNotFoundException("Jogo não encontrado para exclusão. ID: " + id);
         }
-        return ResponseEntity.notFound().build();
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/pesquisa")
