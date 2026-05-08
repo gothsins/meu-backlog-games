@@ -38,4 +38,20 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> databaseError(org.springframework.dao.DataIntegrityViolationException e, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandardError err = new StandardError(
+                Instant.now(),
+                status.value(),
+                "Erro de Integridade de Dados",
+                "Não é possível deletar este recurso pois ele está atrelado a outros registros no banco de dados.",
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(err);
+    }
+
 }
